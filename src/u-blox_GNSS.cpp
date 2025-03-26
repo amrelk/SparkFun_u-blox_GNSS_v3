@@ -1185,6 +1185,11 @@ bool DevUBLOXGNSS::checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass,
       bytesAvailable &= ~((uint16_t)1 << 15);
     }
 
+    // Check for unreasonably large value
+    if (bytesAvailable > 10000) {
+      return false;
+    }
+
 #ifndef SFE_UBLOX_REDUCED_PROG_MEM
     if (_printDebug == true)
     {
